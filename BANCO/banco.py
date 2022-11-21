@@ -61,6 +61,10 @@ def atualizaRegistro(id, nomeGasto, valor, categoria, limiteGasto, vencimentoDia
     cur.execute(f"UPDATE Gasto set nome = ?, valor = ?, categoria = ?, limiteGasto = ?, vencimentoDia = ?, pago = ? WHERE rowid = ?", (nomeGasto, valor, categoria, limiteGasto, vencimentoDia, pago, id))
     con.commit() 
 
+def atualizaPago(id):    
+    cur.execute(f"UPDATE Gasto set pago = 1 WHERE rowid = ?", (id))
+    con.commit() 
+
 def buscaUm(id):
     res = cur.execute('select nome, valor, categoria, limiteGasto, vencimentoDia, pago from Gasto where rowid = ?', (id, )).fetchone()
     return res
@@ -71,9 +75,6 @@ def excluiRegistroBd(id):
 
 dados = buscaTudo()
 
-print(dados)
-print()
-print(F"O total de gasto é: {round(dados['valor'].sum(), 2)}")
 
 
 #inserir colunas pandas

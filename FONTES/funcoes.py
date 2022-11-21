@@ -2,6 +2,15 @@ import BANCO.banco as bd
 from FONTES.menus import *
 import pandas as pd
 
+def atualizaRegistroPago(id):
+    try: 
+        bd.excluiRegistroBd(id)
+        print('REGISTRO ATUALIZADO COM SUCESSO!')
+        pressioneParaContinuar()
+    except:
+        print('FALHA AO ATUALIZAR. O ID FORNECIDO É INVÁLIDO. FORNCEÇA UM ID VÁLIDO.')
+        pressioneParaContinuar()
+
 def vencimentoGasto(vencimento):
     if vencimento != 5 and vencimento != 15:
         vencimento = 5
@@ -28,7 +37,7 @@ def pegaDadosGasto(operacao, id=None):
         nomeGasto = str(input("NOME DO GASTO [EX: CONTA DE LUZ]..: ")).upper()
         print('-' * 80)
         
-        valor = float(input("VALOR [EX: 50.0]..: "))
+        valor = validaValorDivida()
         print('-' * 80)
         
         menuCategoria()
@@ -54,9 +63,13 @@ def pegaDadosGasto(operacao, id=None):
             print("GASTO INSERIDO COM SUCESSO!")
             pressioneParaContinuar()
         elif operacao == 2:
-            bd.atualizaRegistro(id, nomeGasto=nomeGasto, valor=valor, categoria = categoria ,limiteGasto=limiteGasto, vencimentoDia=vencimentoDia, pago=pago)
-            print("GASTO ATUALIZADO COM SUCESSO!")
-            pressioneParaContinuar()
+            try:
+                bd.atualizaRegistro(id, nomeGasto=nomeGasto, valor=valor, categoria = categoria ,limiteGasto=limiteGasto, vencimentoDia=vencimentoDia, pago=pago)
+                print("GASTO ATUALIZADO COM SUCESSO!")
+                pressioneParaContinuar()
+            except:
+                print('ID do registro não encontrado, por favor forneceça um ID válido.')
+                pressioneParaContinuar()
 
     except ValueError as erro:
         print(f"Valor inválido: {erro}")
@@ -96,27 +109,14 @@ def gerarTxt(DADOS, TOTAL_GASTO):
         print("ERRO AO SALVAR O ARQUIVO, CONTATE O ADMINISTRADOR")
         pressioneParaContinuar()
 
-def excluiGasto(ultimoId):
-    try:
-        print('DIGITE O ID DO REGISTRO PARA EXCLUIR')
-        id = int(input('..: '))
-        excluiRegistro(id, ultimoId)
-        
-        print('REGISTRO EXCLUIDO COM SUCESSO')
-        pressioneParaContinuar()
-        
-    except ValueError as erro:
-        print(erro) 
+def excluiGasto(id):
+    try: 
+        bd.excluiRegistroBd(id)
+        print('REGISTRO EXCLUIDO COM SUCESSO!')
         pressioneParaContinuar()
     except:
-        print('ERRO DESCONHECIDO, CONTATE O ADMINISTRADOR.')
+        print('FALHA AO EXCLUIR. O ID FORNECIDO É INVÁLIDO. FORNCEÇA UM ID VÁLIDO.')
         pressioneParaContinuar()
-
-def excluiRegistro(id, ultimoId):
-    if id > ultimoId or id < 0:
-        raise ValueError('ID de gasto inválido, por favor digite o ID correto do gasto')
-    else:
-        bd.excluiRegistroBd(id)
 
 def imprimirDados(DADOS, TOTAL_GASTO, SALDO, SALDO_FINAL):
     print(DADOS.to_markdown(index=False).upper())
@@ -124,6 +124,7 @@ def imprimirDados(DADOS, TOTAL_GASTO, SALDO, SALDO_FINAL):
     print(f'Meu saldo atual é de: R$ {SALDO}')
     print(f'Saldo pós pagamento: R$ {round(SALDO_FINAL, 2)}')
     print()
+    pressioneParaContinuar()
 
 def gerar_excel(DADOS):
     # df2 = DADOS.copy()
@@ -134,5 +135,20 @@ def gerar_excel(DADOS):
 def gera_arquivo(tipoArquivo, DADOS, TOTAL_GASTO):
     if tipoArquivo == 1:
         gerarTxt(DADOS, TOTAL_GASTO)
+        pressioneParaContinuar()
     elif tipoArquivo == 2:
         gerar_excel(DADOS)
+        pressioneParaContinuar()
+
+def validaValorDivida():
+    while True:
+        v = input("DIGITE O VALOR[EX: 50.0]..: ")
+        if type(v) == str:
+            try:
+                valor = float(v)
+                break
+            except:
+                print(f'Erro ao converter o {v} para moeda, tente novamente seguindo o padrão[EX: 50.0]')
+                pressioneParaContinuar()
+                
+    return valor
