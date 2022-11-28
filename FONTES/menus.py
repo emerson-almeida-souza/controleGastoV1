@@ -1,43 +1,55 @@
 import os
 from FONTES.funcoes import *
+from FONTES.coresTerminal import cores
 import BANCO.banco as bd
 
-def menuCategoria():
-    print('DIGITE UMA OPÇÃO PARA CATEGORIA [PADRÃO: OUTROS]')
-    print('1 - BANCOS')
-    print('2 - DOMÉSTICO')
+menus = ["\b[1 - CADASTRAR UM GASTO]",
+         "\b[2 - EXIBIR MEUS GASTOS]",
+         "\b[3 - EXCLUIR REGISTRO]",
+         "\b[4 - SALVAR EM UM ARQUIVO [EXCEL - TXT]]",
+         "\b[5 - ATUALIZAR UM GASTO]",
+         "\b[6 - MARCAR GASTO COMO PAGO]",
+         "\b[7 - ALTERAR DADOS ANALISADOS]", 
+         "\b[8 - SAIR]"
+]
 
 def menuOpcoes(descricao):
         os.system("cls")
-        print('*' * 80)
-        print('SISTEMA DE CONTROLE DE GASTOS')
-        print(f'GASTO ANALISADO: {descricao}')
-        print('*' * 80)
-        
-        print("[1 - CADASTRAR UM GASTO]")
-        print("[2 - EXIBIR MEUS GASTOS]")
-        print("[3 - EXCLUIR REGISTRO]")
-        print("[4 - SALVAR EM UM ARQUIVO [EXCEL - TXT]]")
-        print("[5 - ATUALIZAR UM GASTO]")
-        print("[6 - MARCAR GASTO COMO PAGO]")
-        print("[7 - SAIR]")
+        print(cores.yellow)
+        print('--SISTEMA DE CONTROLE DE GASTOS--', cores.reset_color)
+        print(cores.green, f'GASTO ANALISADO: {descricao}', cores.reset_color)
+        for menu in menus:
+            print(cores.blue, menu, cores.reset_color)
+
+def menuCategoria():
+    print(cores.yellow, 'DIGITE UMA OPÇÃO PARA CATEGORIA [PADRÃO: OUTROS]', cores.reset_color)
+    
+    print(cores.cyan)
+    print('1 - BANCOS')
+    print('2 - DOMÉSTICO', cores.reset_color)
 
 def pressioneParaContinuar():
     input("Pressione qualquer tecla para continuar... ")
     os.system("cls")
 
 def menuVencimento():
-    print('DIGITE O DIA DE VENCIMENTO [PADRÃO: DIA 5]')
-    print('5 - DIA 5')
-    print('15 - DIA 15')
+    print(cores.yellow, 'DIGITE O DIA DE VENCIMENTO [PADRÃO: DIA 5]', cores.reset_color)
+    print(cores.cyan)
+    print('5 - DIA 5', cores.reset_color)
+    print(cores.cyan)
+    print('15 - DIA 15', cores.reset_color)
 
 def menuPago():
-    print('O GASTO FOI PAGO ? [PADRÃO: NÃO]')
-    print('1 - SIM')
-    print('2 - NÃO')
+    print(cores.yellow, 'O GASTO FOI PAGO ? [PADRÃO: NÃO]', cores.reset_color)
+    print(cores.blue)
+    print('1 - SIM', cores.reset_color)
+    print(cores.blue)
+    print('2 - NÃO', cores.reset_color)
 
 def init():
-    saldo = float(input("Digite seu saldo atual...: "))
+    print(cores.green, 'Digite seu saldo atual', cores.reset_color)
+    saldo = float(input("..: "))
+    print(cores.reset_color)
     pressioneParaContinuar()
     return saldo
 
@@ -45,47 +57,53 @@ def menuGeraArquivo():
     while True:
         try:
             os.system('cls')
-            print('1 - TXT')
-            print('2 - EXCEL')
+            print(cores.blue, '1 - TXT')
+            print('2 - EXCEL', cores.reset_color)
+            print(cores.yellow)
             op = int(input('Digite uma opcão..: '))
+            print(cores.reset_color)
 
             if op != 1 and op != 2:
                 os.system('cls')
-                print('ERRO: DIGITE UMA OPÇÃO VÁLIDA.')
+                print(cores.red, 'ERRO: DIGITE UMA OPÇÃO VÁLIDA.', cores.reset_color)
                 pressioneParaContinuar()
             else:
                 break
         except:
             os.system('cls')
-            print('ERRO: DIGITE UMA OPÇÃO VÁLIDA.')
+            print(cores.red, 'ERRO: DIGITE UMA OPÇÃO VÁLIDA.', cores.reset_color)
             pressioneParaContinuar()  
     return op
 
 def validaID(operacao):
     if operacao == 1:
         try:
-            id = int(input('Digite o ID do gasto que deseja ATUALIZAR..: '))
+            print(cores.yellow, 'Digite o ID do gasto que deseja ATUALIZAR', cores.reset_color)
+            id = int(input('..: '))
         except:
-            print("ERRO, O ID DIGITADO É INVÁLIDO, TENTE NOVAMENTE COM UM ID VÁLIDO.")
+            print(cores.red, "ERRO, O ID DIGITADO É INVÁLIDO, TENTE NOVAMENTE COM UM ID VÁLIDO.", cores.reset_color)
             pressioneParaContinuar()
     if operacao == 2:
         try:
-            id = int(input('Digite o ID do gasto que deseja marcar como pago..: '))
+            print(cores.yellow, 'Digite o ID do gasto que deseja marcar como pago', cores.reset_color)
+            id = int(input('..: '))
         except:
-            print("ERRO, O ID DIGITADO É INVÁLIDO, TENTE NOVAMENTE COM UM ID VÁLIDO.")
+            print(cores.red, "ERRO, O ID DIGITADO É INVÁLIDO, TENTE NOVAMENTE COM UM ID VÁLIDO.", cores.reset_color)
             pressioneParaContinuar()
             
     return id
 
 def menuTipoDado():
-    print('ESCOLHA OS GASTOS PARA AS OPERAÇÕES')
+    print(cores.yellow)
+    print('--ESCOLHA OS GASTOS PARA AS OPERAÇÕES--', cores.yellow)
+    print(cores.blue)
     print('1 - TODOS OS GASTOS')
     print('2 - GASTOS PAGOS')
     print('3 - GASTOS NÃO PAGOS')
     print('4 - GASTOS DIA 5')
-    print('5 - GASTOS DIA 15')
+    print('5 - GASTOS DIA 15', cores.reset_color)
     
-    print('DIGITE A OPÇÃO')
+    print(cores.yellow, 'DIGITE A OPÇÃO', cores.reset_color)
     op = input('..: ')
     
     nomeOpcao = [None] * 2
@@ -130,7 +148,7 @@ def tipoDataFrame(op):
                 DADOS = bd.buscaDia15()
                 break
             case _:
-                print('OPÇÃO INVÁLIDA')
+                print(cores.red, 'OPÇÃO INVÁLIDA', cores.red)
                 
     pressioneParaContinuar()
     return DADOS

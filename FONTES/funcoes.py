@@ -6,10 +6,8 @@ def atualizaRegistroPago(id):
     try: 
         bd.excluiRegistroBd(id)
         print('REGISTRO ATUALIZADO COM SUCESSO!')
-        pressioneParaContinuar()
     except:
         print('FALHA AO ATUALIZAR. O ID FORNECIDO É INVÁLIDO. FORNCEÇA UM ID VÁLIDO.')
-        pressioneParaContinuar()
 
 def vencimentoGasto(vencimento):
     if vencimento != 5 and vencimento != 15:
@@ -123,7 +121,6 @@ def imprimirDados(DADOS, TOTAL_GASTO, SALDO, SALDO_FINAL):
     print(f'\nTOTAL DIVIDAS: R$ {round(TOTAL_GASTO, 2)}')
     print(f'Meu saldo atual é de: R$ {SALDO}')
     print(f'Saldo pós pagamento: R$ {round(SALDO_FINAL, 2)}')
-    print()
     pressioneParaContinuar()
 
 def gerar_excel(DADOS):

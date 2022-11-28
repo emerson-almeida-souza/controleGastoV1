@@ -24,7 +24,7 @@ def criarTabela():
         """)
 
 def inserirTabela(nome, valor, categoria, limiteGasto, vencimentoDia, pago):
-    cur.execute(f"INSERT INTO Gasto (nome, valor, categoria, limiteGasto, vencimentoDia, pago) VALUES (?, ?, ?, ?, ?, ?)", (nome, valor, categoria, limiteGasto, vencimentoDia, pago))
+    cur.execute(f"INSERT INTO Gasto (nome, valor, categoria, limiteGasto, vencimentoDia, pago) VALUES (?, ?, ?, ?, ?, ?)", (nome, valor, categoria, limiteGasto, vencimentoDia, pago, ))
     con.commit() 
 
 def buscaTudo():
@@ -58,11 +58,11 @@ def buscaNaoPago():
     return data
 
 def atualizaRegistro(id, nomeGasto, valor, categoria, limiteGasto, vencimentoDia, pago):    
-    cur.execute(f"UPDATE Gasto set nome = ?, valor = ?, categoria = ?, limiteGasto = ?, vencimentoDia = ?, pago = ? WHERE rowid = ?", (nomeGasto, valor, categoria, limiteGasto, vencimentoDia, pago, id))
+    cur.execute(f"UPDATE Gasto set nome = ?, valor = ?, categoria = ?, limiteGasto = ?, vencimentoDia = ?, pago = ? WHERE rowid = ?", (nomeGasto, valor, categoria, limiteGasto, vencimentoDia, pago, id, ))
     con.commit() 
 
 def atualizaPago(id):    
-    cur.execute(f"UPDATE Gasto set pago = 1 WHERE rowid = ?", (id))
+    cur.execute(f"UPDATE Gasto set pago = 1 WHERE rowid = ?", (id, ))
     con.commit() 
 
 def buscaUm(id):
@@ -72,9 +72,6 @@ def buscaUm(id):
 def excluiRegistroBd(id):
     cur.execute(f"delete from Gasto where ROWID = ?", (id, ))
     con.commit() #Confirmar alterações 
-
-dados = buscaTudo()
-
 
 
 #inserir colunas pandas

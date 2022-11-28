@@ -6,14 +6,15 @@ import os
 def main():
     os.system("cls")
     SALDO = init()
-    while True:
-        opcaoDado = menuTipoDado()
-        opcao, descricao = opcaoDado
-        DADOS = tipoDataFrame(opcao)
-        TOTAL_GASTO = float(DADOS['valor'].sum())
-        SALDO_FINAL = SALDO - TOTAL_GASTO
-        
+    opcaoDado = menuTipoDado()
+    opcao, descricao = opcaoDado 
+    DADOS = tipoDataFrame(opcao)
+    TOTAL_GASTO = float(DADOS['valor'].sum())
+    SALDO_FINAL = SALDO - TOTAL_GASTO
+    
+    while True:        
         menuOpcoes(descricao)
+        print(cores.reset_color)
         op = input("..: ")
 
         os.system("cls")
@@ -60,5 +61,3 @@ def main():
                 pressioneParaContinuar()
                     
 main()
-
-print()
