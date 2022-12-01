@@ -1,5 +1,6 @@
 import BANCO.banco as bd
 from FONTES.menus import *
+from FONTES.menuCategoriaGasto import menuCategoriaGasto
 import pandas as pd
 
 def atualizaRegistroPago(id):
@@ -38,7 +39,7 @@ def pegaDadosGasto(operacao, id=None):
         valor = validaValorDivida()
         print('-' * 80)
         
-        menuCategoria()
+        menuCategoriaGasto()
         opCategoria = int(input('..: ')) 
         categoria = categoriasGasto(opCategoria)
         print('-' * 80)
@@ -95,9 +96,9 @@ def cadastraGasto(nomeGasto, valor, categoria, limiteGasto, vencimentoDia, pago)
     else:
         bd.inserirTabela(nome=nomeGasto, valor=valor, limiteGasto=limiteGasto, categoria=categoria, pago=pago, vencimentoDia=vencimentoDia)
 
-def gerarTxt(DADOS, TOTAL_GASTO):
+def gerarTxt(DADOS, TOTAL_GASTO, descricao):
     try:
-        nomeArquivo = r'ARQUIVOS\balanco.txt'
+        nomeArquivo = f'ARQUIVOS\{descricao}.txt'
         with open(nomeArquivo, 'w') as arquivo:
             arquivo.write(f"{DADOS[['nome', 'valor', 'categoria', 'limiteGasto', 'vencimentoDia', 'pago']].to_markdown(index=False).upper()} \n\n TOTAL DIVIDAS: R$ {TOTAL_GASTO}")
                         
@@ -123,18 +124,18 @@ def imprimirDados(DADOS, TOTAL_GASTO, SALDO, SALDO_FINAL):
     print(f'Saldo pós pagamento: R$ {round(SALDO_FINAL, 2)}')
     pressioneParaContinuar()
 
-def gerar_excel(DADOS):
+def gerar_excel(DADOS, descricao):
     # df2 = DADOS.copy()
-    with pd.ExcelWriter('ARQUIVOS\GASTOS.xls') as writer:  
+    with pd.ExcelWriter(f'ARQUIVOS\{descricao}.xls') as writer:  
         DADOS.to_excel(writer, sheet_name=F"TOTAL GASTO R${round(DADOS['valor'].sum(), 2)}", index=False)
         # df2.to_excel(writer, sheet_name='Sheet_name_2')
 
-def gera_arquivo(tipoArquivo, DADOS, TOTAL_GASTO):
+def gera_arquivo(tipoArquivo, DADOS, TOTAL_GASTO, descricao):
     if tipoArquivo == 1:
-        gerarTxt(DADOS, TOTAL_GASTO)
+        gerarTxt(DADOS, TOTAL_GASTO, descricao)
         pressioneParaContinuar()
     elif tipoArquivo == 2:
-        gerar_excel(DADOS)
+        gerar_excel(DADOS, descricao)
         pressioneParaContinuar()
 
 def validaValorDivida():

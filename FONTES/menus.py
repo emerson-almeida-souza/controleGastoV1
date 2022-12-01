@@ -1,43 +1,11 @@
 import os
-from FONTES.funcoes import *
 from FONTES.coresTerminal import cores
 import BANCO.banco as bd
-
-menus = ["\b[1 - CADASTRAR UM GASTO]",
-         "\b[2 - EXIBIR MEUS GASTOS]",
-         "\b[3 - EXCLUIR REGISTRO]",
-         "\b[4 - SALVAR EM UM ARQUIVO [EXCEL - TXT]]",
-         "\b[5 - ATUALIZAR UM GASTO]",
-         "\b[6 - MARCAR GASTO COMO PAGO]",
-         "\b[7 - ALTERAR DADOS ANALISADOS]", 
-         "\b[8 - SAIR]"
-]
-
-def menuOpcoes(descricao):
-        os.system("cls")
-        print(cores.yellow)
-        print('--SISTEMA DE CONTROLE DE GASTOS--', cores.reset_color)
-        print(cores.green, f'GASTO ANALISADO: {descricao}', cores.reset_color)
-        for menu in menus:
-            print(cores.blue, menu, cores.reset_color)
-
-def menuCategoria():
-    print(cores.yellow, 'DIGITE UMA OPÇÃO PARA CATEGORIA [PADRÃO: OUTROS]', cores.reset_color)
-    
-    print(cores.cyan)
-    print('1 - BANCOS')
-    print('2 - DOMÉSTICO', cores.reset_color)
 
 def pressioneParaContinuar():
     input("Pressione qualquer tecla para continuar... ")
     os.system("cls")
 
-def menuVencimento():
-    print(cores.yellow, 'DIGITE O DIA DE VENCIMENTO [PADRÃO: DIA 5]', cores.reset_color)
-    print(cores.cyan)
-    print('5 - DIA 5', cores.reset_color)
-    print(cores.cyan)
-    print('15 - DIA 15', cores.reset_color)
 
 def menuPago():
     print(cores.yellow, 'O GASTO FOI PAGO ? [PADRÃO: NÃO]', cores.reset_color)

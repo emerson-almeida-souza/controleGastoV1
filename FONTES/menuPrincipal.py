@@ -1,5 +1,5 @@
-import os
 from FONTES.coresTerminal import cores
+import os
 
 menus = ["\b[1 - CADASTRAR UM GASTO]",
          "\b[2 - EXIBIR MEUS GASTOS]",
@@ -11,13 +11,11 @@ menus = ["\b[1 - CADASTRAR UM GASTO]",
          "\b[8 - SAIR]"
 ]
 
-def menuOpcoes(descricao):
+
+def menuPrincipal(descricao):
         os.system("cls")
-        print(cores.yellow, '\b--SISTEMA DE CONTROLE DE GASTOS--', cores.reset_color)
-        print(cores.green, f'\bGASTO ANALISADO: {descricao}', cores.reset_color)
+        print(cores.yellow)
+        print('--SISTEMA DE CONTROLE DE GASTOS--', cores.reset_color)
+        print(cores.green, f'GASTO ANALISADO: {descricao}', cores.reset_color)
         for menu in menus:
             print(cores.blue, menu, cores.reset_color)
-
-
-
-menuOpcoes(1)

@@ -1,5 +1,6 @@
 from FONTES.funcoes import *
 from FONTES.menus import *
+from FONTES.menuPrincipal import menuPrincipal
 
 import os
 
@@ -8,12 +9,12 @@ def main():
     SALDO = init()
     opcaoDado = menuTipoDado()
     opcao, descricao = opcaoDado 
-    DADOS = tipoDataFrame(opcao)
-    TOTAL_GASTO = float(DADOS['valor'].sum())
-    SALDO_FINAL = SALDO - TOTAL_GASTO
     
-    while True:        
-        menuOpcoes(descricao)
+    while True:   
+        DADOS = tipoDataFrame(opcao)
+        TOTAL_GASTO = float(DADOS['valor'].sum())
+        SALDO_FINAL = SALDO - TOTAL_GASTO     
+        menuPrincipal(descricao)
         print(cores.reset_color)
         op = input("..: ")
 
@@ -32,7 +33,7 @@ def main():
                 
             case '4':
                 operacaoArquivo = menuGeraArquivo()
-                gera_arquivo(DADOS=DADOS, tipoArquivo=operacaoArquivo, TOTAL_GASTO=TOTAL_GASTO)    
+                gera_arquivo(DADOS=DADOS, tipoArquivo=operacaoArquivo, TOTAL_GASTO=TOTAL_GASTO, descricao=descricao)    
                 
             case '5':
                 imprimirDados(DADOS, TOTAL_GASTO, SALDO, SALDO_FINAL)

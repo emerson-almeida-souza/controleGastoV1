@@ -73,7 +73,6 @@ def excluiRegistroBd(id):
     cur.execute(f"delete from Gasto where ROWID = ?", (id, ))
     con.commit() #Confirmar alterações 
 
-
 #inserir colunas pandas
 # dados.insert(loc=8, column='teste', value='teste')
 # print(dados)
